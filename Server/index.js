@@ -32,6 +32,16 @@ io.on('connection' , socket => {
         const fromEmail = socketToEmailMapping.get(socket.id);
         const socketId = emailToSocketMapping.get(emailId);
         socket.to(socketId).emit('incomming-call', { from: fromEmail , offer}) // incomming call aa rahi hai from this email nd ye uski offer hai 
+        
+    })
+
+    socket.on('call-accepted' , data => {
+        const { emailId , ans} = data;
+        //ab ye cheej vapis user A k pass le jana hai 
+        //socket id nikal lo from map 
+        const socketId = emailToSocketMapping.get(emailId);
+        socket.to(socketId).emit('call-accepted' , { ans });
+
     })
 })
 
